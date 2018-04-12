@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" src="node_modules/vue/dist/vue.js"></script>
+    <style>
+        .active{
+            background-color: pink;
+            margin: 5px;
+        }
+        #app{
+            border: 1px solid orangered;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 以下为绑定属性的几种写法 -->
+        <!-- v-bind 等于 : -->
+        <!-- 绑定html class  -->
+        <!-- 下面的语法表示 active 这个 class 存在与否将取决于数据属性 isActive 的 truthiness。 -->
+        <div :class="{active:isActive,'img-text':has}">对象语法1  {active:isActive,'img-text':has}也是一个对象</div>
+        <!-- classObj为一个对象 -->
+        <div :class="classObj">对象语法2  clssObj为一个对象,定义在data里面</div>
+
+        <div :class="[class1,class2]">数组语法1  [class1,class2]为一个数组,</div>
+
+        <div :class="[class1,{div2:has}]">数组语法里面嵌套对象语法2 [class1,{div2:has}]</div>
+
+        <div :class="[isActive ? class1 : class2 , class3]">数组语法里面嵌套三元运算符3 [isActive ? class1 : class2 , class3]</div>
+
+        <!-- 绑定内联样式 -->
+        <div :style="{color:color, fontSize:font}">对象语法 哈哈哈</div>
+
+        <div :style="styleObj">对象语法 styleObj 啦啦啦</div>
+
+        <div :style="[baseStyle,headerStyle]">数组语法 [baseStyle,headerStyle]</div>
+    </div>
+</body>
+<script type="application/javascript">
+    var app = new Vue({
+       el:'#app',
+       data:{
+           isActive:true,
+           has:true,
+
+           classObj:{
+               active:true,
+               'img-text': false,
+           },
+
+           class1:'div1',
+           class2:'div2',
+           class3:'div3',
+           color:'red',
+           font:'20px',
+
+           styleObj:{
+               color:'green',
+               fontSize:'30px',
+               backgroundColor:'orange',
+           },
+
+           baseStyle:{
+               color:'red',
+           },
+           headerStyle:{
+               backgroundColor:'green',
+           },
+
+
+       },
+    });
+</script>
+</html>

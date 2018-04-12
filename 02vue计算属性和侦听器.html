@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="application/javascript" src="node_modules/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{num1}} + {{num2}} = {{add}}
+        <br>
+        <div> {{fullName}} </div>
+
+        <!-- v-model  v-model指令,input元素,watch侦听器三者经常在一起使用 -->
+        <input type="text" v-model="message">
+        <div>{{message}}</div>
+    </div>
+</body>
+<script type="application/javascript">
+    var app = new Vue({
+       el:'#app',
+       data:{ //提供数据的区块 最好所有的数据都在这里书写
+            num1: 5,
+            num2: 7,
+            firstName:'zhang',
+            lastName: 'san',
+            message:'',
+       },
+       computed:{ //进行逻辑计算的区块 任何涉及到计算的动作请在这里面书写
+            add:function () {  //computed区块里定义的都是属性  在这里add是一个属性,不是方法
+                return this.num1 + this.num2;  //this 指向vue实例
+            },
+            fullName:{
+                //取值器, computed默认只有取值器
+                get:function () {
+                    return this.firstName + " " + this.lastName;
+                },
+                //赋值器 在需要时,我们可以手动启用赋值器
+                set:function (newName) {
+                    let names = newName.split(' ');
+                    this.firstName = names[0];
+                    this.lastName = names[names.length - 1];
+                }
+            },
+       },
+        methods:{//方法区块, showFirstName是一个方法
+           //尽管 computed和methods都可达到同样的效果,但是两者有些区别
+            //computed会缓存第一次调用属性得到的结果,在再次调用属性时,如果数据没有发生改变则直接返回缓存的结果
+            //如果数据发生改变则重新执行函数.
+            //而对于methods而言,每次调用的都是方法,每调用一次方法则执行一次函数. 如果数据量很大则计算量也很大
+            //@click="showFirstName('bbb')" 另一种调用方式
+            showFirstName:function (name) {
+                return this.firstName.toUpperCase() + "+" + name.toUpperCase();
+            }
+        },
+        watch:{ //监听器区块  当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。
+            message:function (newvalue,oldvalue) {
+
+                console.log(newvalue + " " + oldvalue);
+            }
+        },
+    });
+    app.fullName = "li si"; //赋值
+</script>
+</html>
