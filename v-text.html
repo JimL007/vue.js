@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-text && v-html实例</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+<h1>v-text && v-html实例</h1>
+<hr>
+<div id="app">
+    <!--
+        在html中输出data的值有三种方式:
+        1. {{xxx}} 优点:简介, 缺点:当网速很慢时,或者javascript出错时,先暴露{{xxx}}
+        2. v-text="xxx" 优点:解决方式1的缺陷
+        3. v-html="xxx" 用法:当js中写有html标签时,使用它才可以正确显示.
+                        缺陷:容易遭受xss攻击,在实际开发中极少使用.
+    -->
+    <span>{{message}}</span><br>
+    <span v-text="message"></span><br>
+    <span v-html="msghtml"></span>
+</div>
+<script type="application/javascript">
+    var app = new Vue({
+        el: '#app',
+        data:{
+            message: 'hello word',
+            msghtml: '<h2>我是v-html<h2/>'
+        }
+    })
+</script>
+</body>
+</html>

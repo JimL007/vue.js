@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-on实例</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+<h1>v-on实例</h1>
+<hr>
+<!-- v-on 就是监听事件，可以用v-on指令监听DOM事件来触发一些javascript代码。-->
+<!-- 目前都是用 @ 来代替 v-on 写法 -->
+<!-- 更多DOM事件请访问  http://www.w3school.com.cn/tags/html_ref_eventattributes.asp-->
+<a href="http://www.w3school.com.cn/tags/html_ref_eventattributes.asp">更多DOM事件请点击访问</a><br>
+
+<div id="app">
+    本次比赛得分. {{number}}
+    <p>
+
+        <button @click="addnumber">加分</button>
+        <button @click="lessnumber">减分</button>
+
+        <!-- 键盘回车事件绑定 -->
+        <input type="text" @keyup.enter="onEnter" v-model="secondCount">
+    </p><br>
+    <img src="../assets/img/key.png">
+</div>
+<script type="application/javascript">
+    var app = new Vue({
+        el: '#app',
+        data:{
+            number: 0,
+            secondCount:1,
+        },
+
+        computed:{ //进行逻辑计算的选项 任何涉及到计算的动作请在这里面书写
+                   //computed区块里定义的都是属性  在这里addnumber是一个属性,不是方法
+            // addnumber:function () {
+            //     this.number++;
+            // },
+            // lessnumber:function () {
+            //     this.number--;
+            // },
+        },
+
+
+        methods:{ //方法选项, addnumber,lessnumber都是是一个方法
+
+            //尽管 computed和methods都可达到同样的效果,但是两者有些区别
+            //computed: 会缓存第一次调用属性得到的结果,在再次调用属性时,如果数据没有发生改变则直接返回缓存的结果
+            //如果数据发生改变则重新执行函数.
+            //methods: 每次调用的都是方法,每调用一次方法则执行一次函数. 如果数据量很大则计算量也很大
+
+            addnumber:function () {
+                this.number++;
+            },
+            lessnumber:function () {
+                this.number--;
+            },
+
+            onEnter:function(){
+                this.number=this.number+parseInt(this.secondCount);
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

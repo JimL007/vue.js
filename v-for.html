@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for 实例</title>
+    <script src="../assets/js/vue.js"></script>
+</head>
+<body>
+<h1>v-for</h1>
+<hr>
+<div id="app">
+    <ul>
+        <!-- 简单循环 -->
+        <li v-for="item in items">
+            {{item}}
+        </li>
+
+        <!-- 添加排序的简单循环 -->
+        <li v-for="item in sortItems">
+            {{item}}
+        </li>
+    </ul>
+    <hr>
+    <ul>
+        <!-- 对象循环 -->
+        <li v-for="student in students">
+            {{student.name}} : {{student.age}}
+        </li>
+        <hr>
+
+        <!-- 加入索引序号 -->
+        <li v-for="(student,index) in students">
+            {{index + 1}}-{{student.name}} : {{student.age}}
+        </li>
+        <hr>
+
+        <!-- 添加排序的对象循环 -->
+        <li v-for="(sortStudent,index) in sortStudents">
+            {{index + 1}}-{{sortStudent.name}} : {{sortStudent.age}}
+        </li>
+    </ul>
+</div>
+<script type="application/javascript">
+    var app = new Vue({
+        el: '#app',
+        data:{
+            items: [6,5,44,3,2,1],
+            students:[
+                {name:'张国荣',age:2},
+                {name:'黄家驹',age:43},
+                {name:'张家辉',age:17},
+                {name:'古天乐',age:53},
+            ]
+
+        },
+        computed:{ //进行逻辑计算的选项 任何涉及到计算的动作请在这里面书写
+            sortItems: function () {
+                return this.items.sort(sortNumber); //this 指向vue实例
+            },
+            sortStudents:function () {
+                return sortByKey(this.students,'age')
+            }
+        }
+    });
+
+    // 简单排序
+    function sortNumber(a,b) { //定义了一个数组排序方法
+        return a-b;
+    }
+
+    //数组对象方法排序:
+    function sortByKey(array,key){
+        return array.sort(function(a,b){
+            var x=a[key]; //此处a为数组的第一个成员,
+            var y=b[key]; //此处b为数组的第二个成员,比较完成后a为数组第二项,b为数组第三项依次类推直到比较完成.
+            // return ((x<y)?-1:((x>y)?1:0)); // 等同于下面的代码
+
+            if (x < y){
+                return -1;
+            }else if(x == y){
+                return 0;
+            }else{
+                return 1;
+            }
+        });
+    }
+</script>
+</body>
+</html>
